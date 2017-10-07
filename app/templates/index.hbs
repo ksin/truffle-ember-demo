@@ -1,0 +1,18 @@
+{{#if (web3-provided)}}
+
+  <h2>Token Stats</h2>
+
+  <ul>
+    {{#token-stats as |stats|}}
+      <li>{{stats.tokensTotal}}</li>
+      <li>{{stats.tokensSold}}</li>
+      <li>{{stats.pricePerToken}}</li>
+      <li>{{stats.balanceInContract}}</li>
+    {{/token-stats}}
+  </ul>
+
+{{else}}
+
+<h1>Yo you need to install web3 sir.</h1>
+
+{{/if}}

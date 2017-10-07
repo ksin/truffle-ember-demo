@@ -1,6 +1,12 @@
 pragma solidity ^0.4.10; //We have to specify what version of the compiler this code will use
 
 contract Voting {
+  /* These will be assigned at the construction
+   phase, where `msg.sender` is the account
+   creating this contract.
+   */
+  address public owner = msg.sender;
+  uint public creationTime = now;
 
   // We use the struct datatype to store the voter information.
   struct voter {
@@ -54,7 +60,7 @@ contract Voting {
    */
   function voteForCandidate(bytes32 candidate, uint votesInTokens) {
     uint index = indexOfCandidate(candidate);
-    if (index == uint(-1)) throw;
+    if (index == uint(-1)) revert();
 
     // msg.sender gives us the address of the account/voter who is trying
     // to call this function
@@ -66,7 +72,7 @@ contract Voting {
 
     // Make sure this voter has enough tokens to cast the vote
     uint availableTokens = voterInfo[msg.sender].tokensBought - totalTokensUsed(voterInfo[msg.sender].tokensUsedPerCandidate);
-    if (availableTokens < votesInTokens) throw;
+    if (availableTokens < votesInTokens) revert();
 
     votesReceived[candidate] += votesInTokens;
 
@@ -100,7 +106,7 @@ contract Voting {
 
   function buy() payable returns (uint) {
     uint tokensToBuy = msg.value / tokenPrice;
-    if (tokensToBuy > balanceTokens) throw;
+    if (tokensToBuy > balanceTokens) revert();
     voterInfo[msg.sender].voterAddress = msg.sender;
     voterInfo[msg.sender].tokensBought += tokensToBuy;
     balanceTokens -= tokensToBuy;
@@ -115,15 +121,24 @@ contract Voting {
     return (voterInfo[user].tokensBought, voterInfo[user].tokensUsedPerCandidate);
   }
 
+  modifier onlyBy(address _account)
+  {
+    require(msg.sender == _account);
+    _;
+  }
+
   /* All the ether sent by voters who purchased the tokens is in this
    contract's account. This method will be used to transfer out all those ethers
-   in to another account. *** The way this function is written currently, anyone can call
-   this method and transfer the balance in to their account. In reality, you should add
-   check to make sure only the owner of this contract can cash out.
+   in to another account. A modifier is used to make sure only the owner of this contract can cash out.
+   See http://solidity.readthedocs.io/en/develop/common-patterns.html
    */
 
-  function transferTo(address account) {
+  function withdraw(address account) onlyBy(owner) {
     account.transfer(this.balance);
+  }
+
+  function transferOwnership(address newOwner) onlyBy(owner) {
+    owner = newOwner;
   }
 
   function allCandidates() constant returns (bytes32[]) {
