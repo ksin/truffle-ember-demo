@@ -1,18 +1,57 @@
 {{#if (web3-provided)}}
 
-  <h2>Token Stats</h2>
+  {{#voting-contract as |vc|}}
 
-  <ul>
-    {{#token-stats as |stats|}}
-      <li>{{stats.tokensTotal}}</li>
-      <li>{{stats.tokensSold}}</li>
-      <li>{{stats.pricePerToken}}</li>
-      <li>{{stats.balanceInContract}}</li>
-    {{/token-stats}}
-  </ul>
+    <ul>
+      <li>Total tokens for sale {{vc.tokensTotal}}</li>
+      <li>Tokens sold {{vc.tokensSold}}</li>
+      <li>Tokens remaining {{vc.tokensRemaining}}</li>
+      <li>Price per token {{vc.tokenPrice}}</li>
+      <li>Balance in contract {{vc.balanceInContract}}</li>
+    </ul>
+
+    <label for="buy-tokens">Buy Tokens</label>
+    <input
+      id="buy-tokens"
+      type="number"
+      value={{tokensToBuy}}
+      placeholder="Enter number of tokens"
+      oninput={{action (mut tokensToBuy) value="target.value"}}>
+
+    <button onClick={{perform vc.purchaseTokens tokensToBuy vc.tokenPrice}}>
+      Purchase Tokens
+    </button>
+
+    <p>Your total tokens bought: {{vc.voterTokensBought}}</p>
+    <p>Your total tokens remaining: {{vc.voterTokensRemaining}}</p>
+
+    <p>Your votes per candidate:</p>
+
+    <ul>
+      {{#each-in vc.votesPerCandidate as |candidateName candidateVote|}}
+        <li>{{candidateName}} - {{candidateVote}}</li>
+      {{/each-in}}
+    </ul>
+
+    <p>Total votes per candidate</p>
+
+    <ul>
+      {{#each-in vc.totalVotesPerCandidate as |candidateName totalCandidateVote|}}
+        <li onClick={{action (mut candidateToVoteFor) candidateName}}>{{candidateName}} - {{totalCandidateVote}}</li>
+      {{/each-in}}
+    </ul>
+
+    <label for="vote-tokens">Vote tokens</label>
+    {{input id="vote-tokens" value=voteTokens placeholder="Vote tokens"}}
+
+    <button onClick={{perform vc.voteForCandidate candidateToVoteFor voteTokens}}>
+      Vote
+    </button>
+
+  {{/voting-contract}}
 
 {{else}}
 
-<h1>Yo you need to install web3 sir.</h1>
+  <h1>Yo you need to install web3 sir.</h1>
 
 {{/if}}

@@ -6,6 +6,7 @@ export default Ember.Helper.extend({
   web3: inject(),
 
   compute() {
-    return get(this, 'web3.provided');
+    const web3 = get(this, 'web3.instance');
+    return !!(web3 && web3.currentProvider);
   }
 });
