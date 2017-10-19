@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { initialize } from 'truffle-ember/initializers/web3';
+import { initialize } from 'truffle-ember-demo/initializers/web3';
 import { module, test } from 'qunit';
 import destroyApp from '../../helpers/destroy-app';
 

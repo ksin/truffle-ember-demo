@@ -3,7 +3,7 @@
 
 module.exports = function(environment) {
   let ENV = {
-    modulePrefix: 'truffle-ember',
+    modulePrefix: 'truffle-ember-demo',
     environment,
     rootURL: '/',
     locationType: 'auto',

@@ -1,8 +1,8 @@
 {
-  "name": "truffle-ember",
+  "name": "truffle-ember-demo",
   "version": "0.0.0",
   "private": true,
-  "description": "Small description for truffle-ember goes here",
+  "description": "Demo app for truffle-ember",
   "license": "MIT",
   "author": "",
   "directories": {
@@ -39,6 +39,8 @@
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.5.0",
     "ember-source": "^2.15.2",
+    "ember-truth-helpers": "^2.0.0",
+    "liquid-fire": "^0.28.0",
     "loader.js": "^4.6.0",
     "truffle-contract": "^3.0.0"
   },

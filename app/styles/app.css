@@ -1,0 +1,209 @@
+* {
+  font-family: 'Source Sans Pro', sans-serif;
+  box-sizing: border-box;
+  color: #777;
+}
+
+body {
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+
+/* Flex grid */
+
+.flex-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.flex-grid .col {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.flex-grid-thirds {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.flex-grid-thirds .col {
+  width: 32%;
+}
+
+@media (max-width: 400px) {
+  .flex-grid,
+  .flex-grid-thirds {
+    display: block;
+  }
+  .flex-grid .col,
+  .flex-grid-thirds .col {
+    width: 100%;
+    margin: 0 0 10px 0;
+  }
+}
+
+.flex-grid {
+  margin: 0 0 20px 0;
+}
+
+.col {
+  margin: 20px;
+}
+
+/* Align */
+
+.tac {
+  text-align: center;
+}
+
+/* Font */
+
+.fw-light {
+  font-weight: lighter;
+}
+
+.cultured {
+  margin: 0 4px;
+}
+
+/* migo-vote */
+
+.migo-vote {
+  position: relative;
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
+  transition: all .3s ease-in;
+  padding: 0;
+  cursor: pointer;
+}
+
+.migo-vote:hover, .migo-vote--selected {
+  filter: none;
+}
+
+.migo-vote__candidate-name {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: 36px;
+  margin: 0;
+  padding: 0;
+}
+.migo-vote__text {
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 1px #444;
+}
+
+.migo-vote__input {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+/* Visually hidden */
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* Input */
+
+.number-input {
+  border: none;
+  border-bottom: 1px solid #888;
+  text-align: center;
+  padding: 5px;
+  font-size: 16px;
+}
+
+/* Button */
+
+.button {
+  border: 1px solid #888;
+  background-color: #888;
+  cursor: pointer;
+  transition: all .3s ease-in;
+  color: white;
+  height: 30px;
+  font-size: 16px;
+  min-width: 80px;
+  border-radius: 2px;
+}
+
+.button:hover {
+  background-color: #444;
+  border-color: #444;
+}
+
+.purchase-token-button {
+  margin-left: 16px;
+}
+
+/* Section */
+
+.hero {
+  height: 100vh;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 80px;
+  padding: 0 80px;
+}
+
+.purchase-tokens {
+  margin-bottom: 30px;
+}
+
+/* Table */
+
+table {
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+th {
+  font-weight: normal;
+}
+
+td {
+  padding: 3px;
+  padding-left: 20px;
+}
+
+tr:hover > td, tr:hover > th {
+  color: red;
+}
+
+/* Missing web3 */
+
+.missing-web3 {
+  text-align: center;
+  margin-top: 40px;
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
+}
+

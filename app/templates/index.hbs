@@ -2,56 +2,132 @@
 
   {{#voting-contract as |vc|}}
 
-    <ul>
-      <li>Total tokens for sale {{vc.tokensTotal}}</li>
-      <li>Tokens sold {{vc.tokensSold}}</li>
-      <li>Tokens remaining {{vc.tokensRemaining}}</li>
-      <li>Price per token {{vc.tokenPrice}}</li>
-      <li>Balance in contract {{vc.balanceInContract}}</li>
-    </ul>
+    <section class="flex-grid tac hero">
+      <div class="col">
+        <h1 class="fw-light">Which Migos is the most <span class="cultured">C U L T U R E D</span>?</h1>
 
-    <label for="buy-tokens">Buy Tokens</label>
-    <input
-      id="buy-tokens"
-      type="number"
-      value={{tokensToBuy}}
-      placeholder="Enter number of tokens"
-      oninput={{action (mut tokensToBuy) value="target.value"}}>
+        <div class="flex-grid tac">
+          {{#each-in vc.totalVotesPerCandidate as |candidateName|}}
+            <div class="col">
+              {{#liquid-bind candidateName use="crossFade" class="candidate-vote" as |name|}}
+                <div
+                  class="migo-vote {{if (eq candidateToVoteFor name) "migo-vote--selected"}}"
+                  onClick={{action (mut candidateToVoteFor) name}}>
+                  <img class="migo-vote__image" src="/assets/images/{{name}}.jpg">
+                  <div class="migo-vote__candidate-name">
+                    <p class="migo-vote__text">{{name}}</p>
+                  </div>
+                </div>
 
-    <button onClick={{perform vc.purchaseTokens tokensToBuy vc.tokenPrice}}>
-      Purchase Tokens
-    </button>
+                {{#liquid-if (eq candidateToVoteFor name) class="vote-input"}}
+                  <div class="migo-vote__input">
+                    <label for="vote-tokens" class="visually-hidden">Number of tokens to vote</label>
+                    <input
+                      id="vote-tokens"
+                      type="number"
+                      value={{voteTokens}}
+                      placeholder="No. tokens to vote"
+                      class="number-input"
+                      oninput={{action (mut voteTokens) value="target.value"}}>
+                  </div>
 
-    <p>Your total tokens bought: {{vc.voterTokensBought}}</p>
-    <p>Your total tokens remaining: {{vc.voterTokensRemaining}}</p>
+                  <button class="button" onClick={{perform vc.voteForCandidate candidateToVoteFor voteTokens}}>
+                    Vote
+                  </button>
+                {{/liquid-if}}
 
-    <p>Your votes per candidate:</p>
+              {{/liquid-bind}}
+            </div>
+          {{/each-in}}
+        </div>
+      </div>
+    </section>
 
-    <ul>
-      {{#each-in vc.votesPerCandidate as |candidateName candidateVote|}}
-        <li>{{candidateName}} - {{candidateVote}}</li>
-      {{/each-in}}
-    </ul>
+    <section class="stats">
+      <div>
+        <h2>Token stats</h2>
+        <table>
+          <tr>
+            <th>Price per token</th>
+            <td>{{vc.tokenPrice}}</td>
+          </tr>
+          <tr>
+            <th>Total tokens for sale</th>
+            <td>{{vc.tokensTotal}}</td>
+          </tr>
+          <tr>
+            <th>Tokens sold</th>
+            <td>{{vc.tokensSold}}</td>
+          </tr>
+          <tr>
+            <th>Tokens remaining</th>
+            <td>{{vc.tokensRemaining}}</td>
+          </tr>
+          <tr>
+            <th>Balance in contract</th>
+            <td>{{vc.balanceInContract}}</td>
+          </tr>
+        </table>
 
-    <p>Total votes per candidate</p>
+        <h2>Total votes per candidate</h2>
+        <table>
+          {{#each-in vc.totalVotesPerCandidate as |candidateName totalCandidateVote|}}
+            <tr>
+              <th>{{candidateName}}</th>
+              <td>{{totalCandidateVote}}</td>
+            </tr>
+          {{/each-in}}
+        </table>
+      </div>
 
-    <ul>
-      {{#each-in vc.totalVotesPerCandidate as |candidateName totalCandidateVote|}}
-        <li onClick={{action (mut candidateToVoteFor) candidateName}}>{{candidateName}} - {{totalCandidateVote}}</li>
-      {{/each-in}}
-    </ul>
+      <div>
+        <div class="purchase-tokens">
+          <h2><label for="buy-tokens">Purchase Tokens</label></h2>
+          <input
+            id="buy-tokens"
+            type="number"
+            value={{tokensToBuy}}
+            placeholder="No. of tokens to buy"
+            class="number-input"
+            oninput={{action (mut tokensToBuy) value="target.value"}}>
 
-    <label for="vote-tokens">Vote tokens</label>
-    {{input id="vote-tokens" value=voteTokens placeholder="Vote tokens"}}
+          <button class="button purchase-token-button" onClick={{perform vc.purchaseTokens tokensToBuy vc.tokenPrice}}>
+            Buy
+          </button>
+        </div>
 
-    <button onClick={{perform vc.voteForCandidate candidateToVoteFor voteTokens}}>
-      Vote
-    </button>
+        <table>
+          <tr>
+            <th>Your total tokens bought</th>
+            <td>{{vc.voterTokensBought}}</td>
+          </tr>
+          <tr>
+            <th>Your total tokens remaining</th>
+            <td>{{vc.voterTokensRemaining}}</td>
+          </tr>
+        </table>
+
+        <h2>Your votes per candidate</h2>
+
+        <table>
+          {{#each-in vc.votesPerCandidate as |candidateName candidateVote|}}
+            <tr>
+              <th>{{candidateName}}</th>
+              <td>{{candidateVote}}</td>
+            </tr>
+          {{/each-in}}
+        </table>
+      </div>
+    </section>
 
   {{/voting-contract}}
 
 {{else}}
 
-  <h1>Yo you need to install web3 sir.</h1>
+  <div class="missing-web3">
+    <h1>This app uses the Ethereum blockchain. In order to interact with it, download an Ethereum enabled browser like <a href="https://github.com/ethereum/mist">Mist</a>, <a href="https://parity.io/">Parity</a>, or install the <a href="https://metamask.io/">MetaMask Chrome Extension</a>.</h1>
+
+    <img src="/assets/images/stop.jpg">
+  </div>
 
 {{/if}}
