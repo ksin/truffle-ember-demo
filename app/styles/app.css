@@ -1,7 +1,7 @@
 * {
   font-family: 'Source Sans Pro', sans-serif;
   box-sizing: border-box;
-  color: #777;
+  color: #555;
 }
 
 body {
@@ -132,7 +132,7 @@ h2 {
 
 .number-input {
   border: none;
-  border-bottom: 1px solid #888;
+  border-bottom: 1px solid #555;
   text-align: center;
   padding: 5px;
   font-size: 16px;
@@ -141,8 +141,8 @@ h2 {
 /* Button */
 
 .button {
-  border: 1px solid #888;
-  background-color: #888;
+  border: 1px solid #555;
+  background-color: #555;
   cursor: pointer;
   transition: all .3s ease-in;
   color: white;
@@ -153,8 +153,8 @@ h2 {
 }
 
 .button:hover {
-  background-color: #444;
-  border-color: #444;
+  background-color: #333;
+  border-color: #333;
 }
 
 .purchase-token-button {
