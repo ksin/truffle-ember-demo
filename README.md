@@ -1,5 +1,9 @@
 # truffle-ember-demo
 
+![Demo pic 1](/demo-pics/demo1.png?raw=true)
+
+![Demo pic 2](/demo-pics/demo2.png?raw=true)
+
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
